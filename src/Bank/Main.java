@@ -1,30 +1,50 @@
 package Bank;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Scanner in = new Scanner(System.in);
-        BankAccount surya = new BankAccount("Surya narayana GR");
+    public static void main(String[] args) throws Exception {
+        ArrayList<BankAccount> accounts = new ArrayList<>();
         while(true){
-            System.out.println("Enter the choice to perform transaction : ");
-            System.out.print("1.To get info \n2.Deposit intoAccount \n3.Withdraw from Account \n4.Exit Transaction\nEnter your Choice:");
-            switch (in.nextInt()){
-                case 1 -> System.out.println(surya);
-                case 2 ->{
-                    System.out.println("Enter the amount to deposit : ");
-                    System.out.println(surya.deposit(in.nextLong()));
+                Operation operation = new Operation();
+                Scanner in = new Scanner(System.in);
+                System.out.println("Welcome to Jogger's Bank");
+                System.out.println("1.To create A new Account");
+                System.out.println("2.To Change the Account Pin");
+                System.out.println("3.To transact Amount ");
+                System.out.println("4.Exit Bank\n Enter the choice : ");
+                switch (in.nextInt()){
+                    case 1 -> {
+                        BankAccount account =operation.CreateAccount();
+                        accounts.add(account);
+                        System.out.println("Account created successfully");
+                        System.out.println("Here is account Information : ");
+                        System.out.println(account);
+                    }
+                    case 2 -> {
+                        BankAccount account = operation.findAccount(accounts);
+                        System.out.println(accounts);
+                        if (account != null){
+                            operation.confirmPin();
+                        }else{
+                            System.out.println("Entered  invalid Account Number.");
+                            System.out.println("Please try again..!");
+                        }
+                    }
+                    case 3 ->{
+                        BankAccount account = operation.findAccount(accounts);
+                        if (account != null){
+                            account.transact();
+                        }else{
+                            System.out.println("Entered  invalid Account Number.");
+                            System.out.println("Please try again..!");
+                        }
+                    }
+                    case 4->System.exit(0);
+                    default -> System.out.println("Incorrect choice..!Enter valid choice ");
                 }
-                case 3->{
-                    System.out.println("Enter the amount to withdraw : ");
-                    System.out.println(surya.withdraw(in.nextLong()));
-                }
-                case 4 -> System.exit(0);
-                default -> System.out.println("Invalid choice..! Please Enter the valid choice");
+                BankAccount.pressKey();
             }
-            System.out.println("Press Enter to continue");
-            System.in.read();
         }
     }
-}

@@ -1,5 +1,6 @@
 package Bank;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,36 +12,55 @@ public class BankAccount {
     Random random = new Random();
     Scanner in = new Scanner(System.in);
 
-    public BankAccount(String holderName, long balance) {
+    private BankAccount(String holderName) {
         this.setAccNumber();
         setAccountPin();
         this.holderName = holderName;
-        this.balance = balance;
+    }
+    protected void transact() throws Exception{
+        while(true){
+            System.out.println("Enter the choice to perform transaction : ");
+            System.out.print("1.To get info \n2.Deposit intoAccount \n3.Withdraw from Account \n4.Exit Transaction\nEnter your Choice:");
+            switch (in.nextInt()){
+                case 1 -> System.out.println(this);
+                case 2 ->{
+                    System.out.println("Enter the amount to deposit : ");
+                    System.out.println(this.deposit(in.nextLong()));
+                }
+                case 3->{
+                    System.out.println("Enter the amount to withdraw : ");
+                    System.out.println(this.withdraw(in.nextLong()));
+                }
+                case 4 -> System.exit(0);
+                default -> System.out.println("Invalid choice..! Please Enter the valid choice");
+            }
+            pressKey();
+        }
     }
 
-    public BankAccount(String holderName) {
-        this.setAccNumber();
-        setAccountPin();
-        this.holderName = holderName;
+    public static void pressKey() throws IOException {
+        System.out.println("Press Enter to continue");
+        System.in.read();
     }
-    private Boolean checkPin(){
+
+    protected Boolean checkPin(String msg){
         int chance = 3;
-        System.out.println("Enter the pin to proceed Withdraw : ");
+        System.out.println("Confirm the pin to "+msg+" :");
         do{
              if(in.nextInt() == this.accountPin){
                  return true;
              }
              chance--;
-            System.out.println("Enter the Correct Pin");
+            System.out.println("Invalid Pin..! Please Enter the Valid Pin");
         }while(chance != 0);
         return false;
     }
 
     public String withdraw(long balance){
-        if(checkPin()){
+        if(checkPin("Withdraw Amount")){
             if(balance<this.balance){
                 setBalance(this.balance-balance);
-                return "Rs :"+balance +"Has been successfully Withdrawn,Remaining balance :Rs :" + getBalance();
+                return "Rs :"+balance +" Has been successfully Withdrawn,Remaining balance :Rs :" + getBalance();
             }
             return "Insufficient Balance Withdraw has been Cancelled";
         }
@@ -49,7 +69,10 @@ public class BankAccount {
 
     public String deposit(long balance){
         setBalance(balance+this.balance);
-        return "Rs : "+balance+"Has been Successfully Credited";
+        return "Rs : "+balance+" Has been Successfully Credited";
+    }
+    public static BankAccount CreateAccount(String name){
+        return new BankAccount(name);
     }
 
     public String getHolderName() {
