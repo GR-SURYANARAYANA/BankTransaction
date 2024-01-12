@@ -26,7 +26,7 @@ public class Main {
                         BankAccount account = operation.findAccount(accounts);
                         System.out.println(accounts);
                         if (account != null){
-                            operation.confirmPin();
+                            operation.confirmPin(account);
                         }else{
                             System.out.println("Entered  invalid Account Number.");
                             System.out.println("Please try again..!");
@@ -41,7 +41,7 @@ public class Main {
                             System.out.println("Please try again..!");
                         }
                     }
-                    case 4->System.exit(0);
+                    case 4->{return;}
                     default -> System.out.println("Incorrect choice..!Enter valid choice ");
                 }
                 BankAccount.pressKey();

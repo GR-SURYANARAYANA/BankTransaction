@@ -1,6 +1,5 @@
 package Bank;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -25,7 +24,7 @@ public class Operation {
         }
         return null;
     }
-    void confirmPin(){
+    void confirmPin(BankAccount account){
         System.out.println("What's the 4 digit New Pin : ");
         int newPin = in.nextInt();
         if(newPin > 10000 ){
@@ -36,6 +35,8 @@ public class Operation {
             System.out.println("Please Confirm Your New Pin : ");
             if(newPin == in.nextInt()){
                 System.out.println("Your pin has been successfully changed...!");
+                account.setAccountPin(newPin);
+                return;
             }
         }
         System.out.println("Please Retry after some Times");

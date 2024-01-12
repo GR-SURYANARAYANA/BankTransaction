@@ -45,7 +45,7 @@ public class BankAccount {
 
     protected Boolean checkPin(String msg){
         int chance = 3;
-        System.out.println("Confirm the pin to "+msg+" :");
+        System.out.println("Enter Present Pin to "+msg+" :");
         do{
              if(in.nextInt() == this.accountPin){
                  return true;
@@ -96,7 +96,7 @@ public class BankAccount {
     }
 
     private void setBalance(long balance) {
-        this.balance += balance;
+        this.balance = balance;
     }
 
     public void setAccountPin() {
@@ -109,5 +109,9 @@ public class BankAccount {
                 "accNumber='" + accNumber + "'\n" +
                 "balance=" + balance + '\n'+
                 "accountPin=" + accountPin;
+    }
+
+    public void setAccountPin(int newPin) {
+     this.accountPin = newPin;
     }
 }
