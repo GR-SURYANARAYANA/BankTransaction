@@ -20,9 +20,7 @@ public class Main {
                     System.out.println("Enter the amount to withdraw : ");
                     System.out.println(surya.withdraw(in.nextLong()));
                 }
-                case 4 -> {
-                    System.exit(0);
-                }
+                case 4 -> System.exit(0);
                 default -> System.out.println("Invalid choice..! Please Enter the valid choice");
             }
             System.out.println("Press Enter to continue");
