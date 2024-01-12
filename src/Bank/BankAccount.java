@@ -17,6 +17,11 @@ public class BankAccount {
         setAccountPin();
         this.holderName = holderName;
     }
+
+    /**
+     * The overall Transaction will be played by this method
+     * @throws Exception
+     */
     protected void transact() throws Exception{
         while(true){
             System.out.println("Enter the choice to perform transaction : ");
@@ -43,6 +48,11 @@ public class BankAccount {
         System.in.read();
     }
 
+    /**
+     * This method is used to check whether user entered pin is correct or not
+     * @param msg
+     * @return
+     */
     protected Boolean checkPin(String msg){
         int chance = 3;
         System.out.println("Enter Present Pin to "+msg+" :");
@@ -56,6 +66,11 @@ public class BankAccount {
         return false;
     }
 
+    /**
+     * The balance of account will be withdrawn and it recalls confirm pin to withdraw the money
+     * @param balance
+     * @return
+     */
     public String withdraw(long balance){
         if(checkPin("Withdraw Amount")){
             if(balance<this.balance){
@@ -67,10 +82,21 @@ public class BankAccount {
         return "You are out of Try please try later";
     }
 
+    /**
+     * Deposit method to deposit amount into the account
+     * @param balance
+     * @return
+     */
     public String deposit(long balance){
         setBalance(balance+this.balance);
         return "Rs : "+balance+" Has been Successfully Credited";
     }
+
+    /**
+     * The Factory Method which helps to invoke the constructor to hide duplicates
+     * @param name
+     * @return
+     */
     public static BankAccount CreateAccount(String name){
         return new BankAccount(name);
     }
